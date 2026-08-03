@@ -3,9 +3,11 @@ package hotelflow.service;
 import hotelflow.model.Quarto;
 import hotelflow.model.Reserva;
 
+import java.awt.font.OpenType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Recepcao {
 
@@ -25,6 +27,11 @@ public class Recepcao {
                 .anyMatch(r -> r.contemData(data));
         return !temReservaNaData;
     }
+
+
+
+
+}
 
 
 }

@@ -18,7 +18,8 @@ void main() {
     rh.adicionarFuncionario(fun3);
     rh.adicionarFuncionario(fun4);
 
-    Hotel hotel = new Hotel("HotelFlow", 40, rh);
+    Recepcao recepcao = new Recepcao();
+    Hotel hotel = new Hotel("HotelFlow", 40, rh, recepcao);
 
     rh.definirEscala(1, Turno.MANHA, LocalDate.of(2026, 8, 10));
     rh.definirEscala(1, Turno.TARDE, LocalDate.of(2026, 8, 15));
@@ -28,7 +29,6 @@ void main() {
     Quarto q1 = new Quarto(101, TipoQuarto.SUITE);
 
     Reserva r1 = new Reserva(h1, q1, LocalDate.of(2026, 8, 14), LocalDate.of(2026, 8, 18));
-    Recepcao recepcao = new Recepcao();
     recepcao.criarReserva(r1);
     System.out.println(recepcao.listarReservas());
 

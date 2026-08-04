@@ -28,13 +28,18 @@ void main() {
     Hospede h1 = new Hospede("Marcos", "1020304050");
     Quarto q1 = new Quarto(101, TipoQuarto.SUITE);
 
-    Reserva r1 = new Reserva(h1, q1, LocalDate.of(2026, 8, 10), LocalDate.of(2026, 8, 15));
-    recepcao.criarReserva(r1);
-    Reserva r2 = new Reserva(h1, q1, LocalDate.of(2026, 8, 12), LocalDate.of(2026, 8, 18));
-    recepcao.criarReserva(r2);
-    Reserva r3 = new Reserva(h1, q1, LocalDate.of(2026, 8, 15), LocalDate.of(2026, 8, 20));
-    recepcao.criarReserva(r3);
-    System.out.println(recepcao.listarReservas());
+    CargoComportamento comportamento1 = Cargo.GERENTE;
+    CargoComportamento comportamento2 = Cargo.DIRETOR;
+    CargoComportamento comportamento3 = Cargo.RECEPCIONISTA;
+
+    List<CargoComportamento> comportamentos = new ArrayList<>();
+    comportamentos.add(comportamento1);
+    comportamentos.add(comportamento2);
+    comportamentos.add(comportamento3);
+    for (CargoComportamento comportamento : comportamentos) {
+        System.out.println(comportamento.calcularSalarioBase());
+    }
+
 
 
 

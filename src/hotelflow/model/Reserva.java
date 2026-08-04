@@ -8,12 +8,18 @@ public class Reserva {
     private Quarto quarto;
     private LocalDate dataCheckIn;
     private LocalDate dataCheckOut;
+    private String observacao;
 
-    public Reserva(Hospede hospede, Quarto quarto, LocalDate dataCheckIn, LocalDate dataCheckOut) {
+    public Reserva(Hospede hospede, Quarto quarto, LocalDate dataCheckIn, LocalDate dataCheckOut, String observacao) {
         this.hospede = hospede;
         this.quarto = quarto;
         this.dataCheckIn = dataCheckIn;
         this.dataCheckOut = dataCheckOut;
+        this.observacao = observacao;
+    }
+
+    public String getObservacao() {
+        return observacao;
     }
 
     public Hospede getHospede() {
@@ -38,7 +44,8 @@ public class Reserva {
                 "Hóspede: " + hospede + "\n" +
                 "Quarto: " + quarto + "\n" +
                 "Data check-in: " + dataCheckIn + "\n" +
-                "Data check-out: " + dataCheckOut;
+                "Data check-out: " + dataCheckOut + "\n" +
+                "Observação: " + observacao;
     }
 
     public boolean contemData(LocalDate data){
@@ -46,4 +53,6 @@ public class Reserva {
         boolean antesDoCheckOut = !data.isAfter(dataCheckOut);
         return antesDoCheckOut && depoisDoCheckIn;
     }
+
+
 }

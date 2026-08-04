@@ -28,12 +28,16 @@ void main() {
     Hospede h1 = new Hospede("Marcos", "1020304050");
     Quarto q1 = new Quarto(101, TipoQuarto.SUITE);
 
-    Reserva r1 = new Reserva(h1, q1, LocalDate.of(2026, 8, 14), LocalDate.of(2026, 8, 18));
+    Reserva r1 = new Reserva(h1, q1, LocalDate.of(2026, 8, 10), LocalDate.of(2026, 8, 15));
     recepcao.criarReserva(r1);
+    Reserva r2 = new Reserva(h1, q1, LocalDate.of(2026, 8, 12), LocalDate.of(2026, 8, 18));
+    recepcao.criarReserva(r2);
+    Reserva r3 = new Reserva(h1, q1, LocalDate.of(2026, 8, 15), LocalDate.of(2026, 8, 20));
+    recepcao.criarReserva(r3);
     System.out.println(recepcao.listarReservas());
 
-    System.out.println(recepcao.quartoDisponivel(q1, LocalDate.of(2026, 8, 16))); // deveria ser false (dentro do período reservado)
-    System.out.println(recepcao.quartoDisponivel(q1, LocalDate.of(2026, 8, 25))); // deveria ser true (fora do período)
+
+
 }
 
 

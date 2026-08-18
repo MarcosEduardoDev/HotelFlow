@@ -2,8 +2,8 @@ package hotelflow.service;
 
 import hotelflow.model.Quarto;
 import hotelflow.model.Reserva;
+import hotelflow.model.ReservaNaoEncontradaException;
 
-import java.awt.font.OpenType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +30,17 @@ public class Recepcao {
         return !temConflito;
     }
 
-    public boolean cancelarReserva(Quarto quarto, LocalDate data){
-        Optional<Reserva> reserva = reservas.stream()
+    public void cancelarReserva(Quarto quarto, LocalDate data) {
+        Reserva reserva = buscarReservaOuLancarExcecao(quarto, data);
+        reservas.remove(reserva);
+    }
+
+    private Reserva buscarReservaOuLancarExcecao(Quarto quarto, LocalDate data){
+        return reservas.stream()
                 .filter(r -> r.getQuarto() == quarto && r.contemData(data))
-                .findFirst();
-        if (reserva.isPresent()){
-            reservas.remove(reserva.get());
-            return true;
-        }
-        return false;
-        }
-
-
+                .findFirst()
+                .orElseThrow(() -> new ReservaNaoEncontradaException("Reserva não encontrada."));
+    }
 }
 
 

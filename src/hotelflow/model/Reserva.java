@@ -1,6 +1,7 @@
 package hotelflow.model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Reserva {
 
@@ -53,6 +54,13 @@ public class Reserva {
         boolean antesDoCheckOut = !data.isAfter(dataCheckOut);
         return antesDoCheckOut && depoisDoCheckIn;
     }
+
+    public double calcularValor() {
+        long dias = ChronoUnit.DAYS.between(dataCheckIn, dataCheckOut);
+        return dias * quarto.getTipo().getPrecoDiaria();
+    }
+
+
 
 
 }

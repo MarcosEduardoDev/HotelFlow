@@ -1,5 +1,4 @@
 package hotelflow.model;
-
 import java.time.LocalDateTime;
 
 public class Notificacao {

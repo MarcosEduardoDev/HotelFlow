@@ -1,9 +1,5 @@
 package hotelflow.model;
 
-import hotelflow.model.CargoComportamento;
-import hotelflow.model.Funcionario;
-
-
 public enum Cargo implements CargoComportamento {
     RECEPCIONISTA {
         @Override

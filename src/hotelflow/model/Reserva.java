@@ -12,6 +12,9 @@ public class Reserva {
     private String observacao;
 
     public Reserva(Hospede hospede, Quarto quarto, LocalDate dataCheckIn, LocalDate dataCheckOut, String observacao) {
+        if (dataCheckOut.isBefore(dataCheckIn) || dataCheckOut.isEqual(dataCheckIn)) {
+            throw new IllegalArgumentException("Data de check-out deve ser posterior à data de check-in.");
+        }
         this.hospede = hospede;
         this.quarto = quarto;
         this.dataCheckIn = dataCheckIn;

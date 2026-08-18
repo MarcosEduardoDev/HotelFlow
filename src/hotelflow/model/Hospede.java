@@ -6,6 +6,12 @@ public class Hospede {
     private String documento;
 
     public Hospede(String nome, String documento) {
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio.");
+        }
+        if (documento == null || documento.isBlank()) {
+            throw new IllegalArgumentException("Documento não pode ser vazio.");
+        }
         this.nome = nome;
         this.documento = documento;
     }

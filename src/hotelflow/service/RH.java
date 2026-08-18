@@ -1,7 +1,6 @@
 package hotelflow.service;
 
 import hotelflow.model.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,16 +20,9 @@ public class RH {
         return new ArrayList<>(gestao);
     }
 
-    public void removerFuncionario(Funcionario funcionario){
+    public void removerFuncionario(int id){
+        Funcionario funcionario = buscarOuLancarExcecao(id);
         gestao.remove(funcionario);
-    }
-
-    public Funcionario buscarFuncionario(String nome) {
-        for (Funcionario funcionario : gestao) {
-            if (funcionario.getNome().equals(nome)) {
-                return funcionario;
-            }
-        } return null;
     }
 
     public Optional<Funcionario> buscarFuncionarioPorId(int id){

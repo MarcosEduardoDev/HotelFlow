@@ -3,11 +3,9 @@ package hotelflow.service;
 import hotelflow.model.Quarto;
 import hotelflow.model.Reserva;
 import hotelflow.model.ReservaNaoEncontradaException;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class Recepcao {
 

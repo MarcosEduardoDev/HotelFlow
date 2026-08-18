@@ -1,8 +1,4 @@
 package hotelflow.model;
-
-import hotelflow.model.Escala;
-import hotelflow.model.Notificacao;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +21,12 @@ public class Funcionario {
     }
 
     public Funcionario(String nome, String dataDeEntrada, int idade, Cargo cargo) {
+        if (idade < 0) {
+            throw new IllegalArgumentException("Idade não pode ser negativa.");
+        }
+        if (nome == null || nome.isBlank()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio.");
+        }
         this.nome = nome;
         this.dataDeEntrada = dataDeEntrada;
         this.idade = idade;

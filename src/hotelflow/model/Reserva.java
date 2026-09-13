@@ -63,6 +63,14 @@ public class Reserva {
         return dias * quarto.getTipo().getPrecoDiaria();
     }
 
+    public boolean estaAtiva(LocalDate data){
+        return ((dataCheckIn.isBefore(data) ||
+                dataCheckIn.isEqual(data)) &&
+                dataCheckOut.isAfter(data));
+    }
+
+
+
 
 
 

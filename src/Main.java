@@ -49,28 +49,55 @@ void main() {
     System.out.println("\n===== RESERVAS =====");
     Hospede h1 = new Hospede("Marcos", "1020304050");
     Quarto q1 = new Quarto(101, TipoQuarto.SUITE);
+    Quarto q2 = new Quarto(202, TipoQuarto.SIMPLES);
+    Quarto q3 = new Quarto(303, TipoQuarto.DUPLO);
 
-    Reserva reserva1 = new Reserva(
+    Reserva r1 = new Reserva(
             h1, q1,
-            LocalDate.of(2026, 8, 5),
-            LocalDate.of(2026, 8, 10),
+            LocalDate.of(2026, 9, 1),
+            LocalDate.of(2026, 9, 5),
             "Sem observação."
     );
 
-    hotel.criarReserva(reserva1);
+    Reserva r2 = new Reserva(
+            h1, q2,
+            LocalDate.of(2026, 9, 2),
+            LocalDate.of(2026, 9, 8),
+            "Sem observação.");
+
+    Reserva r3 = new Reserva(
+            h1, q3,
+            LocalDate.of(2026, 9, 3),
+            LocalDate.of(2026, 9, 10),
+            "Sem observação.");
+
+
+    hotel.criarReserva(r1);
     System.out.println(hotel.listarReservas());
-    System.out.println("Valor total da estadia: " + reserva1.calcularValor());
+    System.out.println("Valor total da estadia: " + r1.calcularValor());
+
+    hotel.criarReserva(r2);
+    System.out.println(hotel.listarReservas());
+    System.out.println("Valor total da estadia: " + r2.calcularValor());
+
+    hotel.criarReserva(r3);
+    System.out.println(hotel.listarReservas());
+    System.out.println("Valor total da estadia: " + r3.calcularValor());
 
     boolean disponivel = recepcao.quartoDisponivel(q1, LocalDate.of(2026, 8, 20), LocalDate.of(2026, 8, 22));
     System.out.println("Quarto 101 disponível de 20 a 22/08? " + disponivel);
 
     // ===== RECEPÇÃO: CANCELAMENTO =====
     System.out.println("\n===== CANCELAMENTO =====");
-    recepcao.cancelarReserva(q1, LocalDate.of(2026, 8, 7));
+    recepcao.cancelarReserva(q1, LocalDate.of(2026, 9, 5));
     System.out.println("Reservas após cancelamento: " + hotel.listarReservas());
 
     System.out.println("\n========= TESTE ==========");
-    Hospede hospedeInvalido = new Hospede("", "123");
-    Quarto quartoInvalido = new Quarto(-1, TipoQuarto.SIMPLES);
+
+
+    System.out.println("\n========= TESTE 02 ==========");
+    Optional<Reserva> reserva = recepcao.reservaMaisCara(LocalDate.now());
+        double valor = reserva.map(r -> r.calcularValor())
+                .orElse(0.0);
 
 }

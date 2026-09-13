@@ -1,11 +1,13 @@
 package hotelflow.service;
 
-import hotelflow.model.Quarto;
-import hotelflow.model.Reserva;
-import hotelflow.model.ReservaNaoEncontradaException;
+import hotelflow.model.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Recepcao {
 
@@ -39,7 +41,55 @@ public class Recepcao {
                 .findFirst()
                 .orElseThrow(() -> new ReservaNaoEncontradaException("Reserva não encontrada."));
     }
+
+    public List<Reserva> buscarReservasHospede(Hospede hospede){
+        return reservas.stream()
+                .filter(r -> r.getHospede().getNome().equals(hospede.getNome()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Reserva> pegarPeloNome(Hospede hospede){
+        return reservas.stream()
+                .filter(r -> r.getHospede().getNome().equals(hospede.getNome()))
+                .collect(Collectors.toList());
+    }
+
+    public List<String> nomeDosHospedes(){
+        return reservas.stream()
+                .map(r -> r.getHospede().getNome())
+                .distinct()
+                .sorted()
+                .collect(Collectors.toList());
+    }
+
+    public List<Hospede> hospedesDeHoje(){
+        return reservas.stream()
+                .filter(r -> (r.getDataCheckIn().isBefore(LocalDate.now()) ||
+                        r.getDataCheckIn().isEqual(LocalDate.now())) &&
+                        r.getDataCheckOut().isAfter(LocalDate.now()))
+                .map(r -> r.getHospede())
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public double calcularValorReservasAtivas(LocalDate data){
+        return reservas.stream()
+                .filter(r -> r.estaAtiva(data))
+                .map(r -> r.calcularValor())
+                .reduce(0.0, (total, valor) -> total + valor);
+    }
+
+    public Optional<Reserva> reservaMaisCara(LocalDate data){
+        return reservas.stream()
+                .filter(r -> r.estaAtiva(data))
+                .max(Comparator.comparing(Reserva::calcularValor));
+    }
+
+
+
 }
+
+
 
 
 

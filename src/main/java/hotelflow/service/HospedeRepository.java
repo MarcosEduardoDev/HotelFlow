@@ -2,7 +2,6 @@ package hotelflow.service;
 
 import hotelflow.model.Hospede;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +38,7 @@ public class HospedeRepository {
         String sql = "SELECT * FROM hospede";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
-        ResultSet resultado = stmt.executeQuery()) {
+             ResultSet resultado = stmt.executeQuery()) {
 
             while (resultado.next()) {
 
@@ -53,4 +52,25 @@ public class HospedeRepository {
         }
         return hospedes;
     }
-}
+
+        public Hospede buscarPorDocumento(String documento) throws SQLException{
+
+            String sql1 = "SELECT * FROM hospede WHERE documento = ?";
+
+            try (PreparedStatement stmt1 = conexao.prepareStatement(sql1)) {
+                stmt1.setString(1, documento);
+
+                try (ResultSet resultado = stmt1.executeQuery()) {
+                    if (resultado.next()) {
+
+                        String nome = resultado.getString("nome");
+                        String doc = resultado.getString("documento");
+
+                        return new Hospede(nome, doc);
+                    }
+
+                    return null;
+                }
+            }
+        }
+    }

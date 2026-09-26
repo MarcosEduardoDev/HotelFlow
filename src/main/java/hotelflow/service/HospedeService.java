@@ -25,7 +25,7 @@ public class HospedeService {
         Hospede hospedeExistente = repository.buscarPorDocumento(hospedeDTO.getDocumento());
 
         if (hospedeExistente != null) {
-            throw new HospedeJaExisteException("Número de documento utilizado por outro hóspede.");
+            throw new HospedeJaExisteException("Este documento já está sendo utilizado por outro hóspede.");
         }
             repository.salvarHospede(hospede);
     }

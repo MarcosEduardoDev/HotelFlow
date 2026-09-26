@@ -1,3 +1,9 @@
+C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\config\DatabaseConfig.java
+C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\controller\HotelController.java
+C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\dto\HospedeRequestDTO.java
+C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\exception\GlobalExceptionHandler.java
+C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\exception\HospedeJaExisteException.java
+C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\HotelFlowApplication.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\Main.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\model\Cargo.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\model\CargoComportamento.java
@@ -13,6 +19,7 @@ C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\mod
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\model\Turno.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\service\Conexao.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\service\HospedeRepository.java
+C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\service\HospedeService.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\service\Hotel.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\service\Recepcao.java
 C:\Users\Marcos Eduardo\Documents\InteliJJ\HotelFlow\src\main\java\hotelflow\service\RH.java

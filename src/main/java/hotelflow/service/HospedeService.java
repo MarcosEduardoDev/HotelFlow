@@ -3,10 +3,10 @@ package hotelflow.service;
 import hotelflow.dto.HospedeRequestDTO;
 import hotelflow.exception.HospedeJaExisteException;
 import hotelflow.model.Hospede;
+import hotelflow.repository.HospedeRepository;
 import org.springframework.stereotype.Service;
-
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HospedeService {
@@ -17,24 +17,22 @@ public class HospedeService {
         this.repository = repository;
     }
 
-    public void salvarHospede(HospedeRequestDTO hospedeDTO) throws SQLException, HospedeJaExisteException {
+    public void salvarHospede(HospedeRequestDTO hospedeRequestDTO)  {
 
         Hospede hospede = new Hospede(
-                hospedeDTO.getNome(), hospedeDTO.getDocumento());
+                hospedeRequestDTO.getNome(), hospedeRequestDTO.getDocumento());
 
-        Hospede hospedeExistente = repository.buscarPorDocumento(hospedeDTO.getDocumento());
-
-        if (hospedeExistente != null) {
+        if (repository.existsByDocumento(hospede.getDocumento())) {
             throw new HospedeJaExisteException("Este documento já está sendo utilizado por outro hóspede.");
         }
-            repository.salvarHospede(hospede);
+        repository.save(hospede);
     }
 
-    public List<Hospede> buscarTodos() throws SQLException {
-        return repository.buscarTodos();
+    public List<Hospede> buscarTodos() {
+        return repository.findAll();
     }
 
-    public Hospede buscarPorDocumento(String documento) throws SQLException{
-        return repository.buscarPorDocumento(documento);
+    public Optional<Hospede> buscarPorDocumento(String documento) {
+        return repository.findByDocumento(documento);
     }
 }

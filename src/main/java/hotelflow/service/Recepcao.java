@@ -1,5 +1,6 @@
 package hotelflow.service;
 
+import hotelflow.exception.ReservaNaoEncontradaException;
 import hotelflow.model.*;
 
 import java.time.LocalDate;

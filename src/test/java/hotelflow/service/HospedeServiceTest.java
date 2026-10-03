@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import hotelflow.exception.HospedeJaExisteException;
 import hotelflow.model.Hospede;
+import hotelflow.repository.HospedeRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
@@ -22,7 +23,7 @@ public class HospedeServiceTest {
         HospedeRepository repository = org.mockito.Mockito.mock(HospedeRepository.class);
         HospedeService service = new HospedeService(repository);
 
-        when(repository.buscarPorDocumento("123")).thenReturn(new Hospede("João", "123"));
+        when(repository.findByDocumento("123")).thenReturn(new Hospede("João", "123"));
 
         HospedeRequestDTO dto = new HospedeRequestDTO();
         dto.setNome("Pedro");
@@ -44,7 +45,7 @@ public class HospedeServiceTest {
 
         HospedeService service = new HospedeService(repository);
 
-        when(repository.buscarPorDocumento("456"))
+        when(repository.findByDocumento("456"))
                 .thenReturn(null);
 
         HospedeRequestDTO dto = new HospedeRequestDTO();
@@ -55,7 +56,7 @@ public class HospedeServiceTest {
 
         service.salvarHospede(dto);
 
-        verify(repository).salvarHospede(captor.capture());
+        verify(repository).save(captor.capture());
 
         Hospede hospedeCapturado = captor.getValue();
 

@@ -1,9 +1,23 @@
 package hotelflow.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Hospede {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hospede_id_seq")
+    @SequenceGenerator(
+            name = "hospede_id_seq",
+            sequenceName = "hospede_id_seq",
+            allocationSize = 1)
+    private Long id;
 
     private String nome;
     private String documento;
+
+    protected Hospede() {
+    }
 
     public Hospede(String nome, String documento) {
         if (nome == null || nome.isBlank()) {
@@ -19,7 +33,7 @@ public class Hospede {
     public String getNome() {
         return nome;
     }
-
+    public Long getId() { return id;}
     public String getDocumento() {
         return documento;
     }

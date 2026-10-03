@@ -1,5 +1,6 @@
 package hotelflow.service;
 
+import hotelflow.exception.FuncionarioNaoEncontradoException;
 import hotelflow.model.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

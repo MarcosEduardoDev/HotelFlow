@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: hotelflow.service.HospedeServiceTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.451 s -- in hotelflow.service.HospedeServiceTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.727 s -- in hotelflow.service.HospedeServiceTest

@@ -1,29 +1,26 @@
 package hotelflow.service;
 
 import hotelflow.dto.HospedeRequestDTO;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import hotelflow.exception.HospedeJaExisteException;
 import hotelflow.model.Hospede;
 import hotelflow.repository.HospedeRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import java.sql.SQLException;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class HospedeServiceTest {
 
     @Test
-    void deveRecusarHospedeComDocumentoDuplicado() throws SQLException {
+    void deveRecusarHospedeComDocumentoDuplicado() {
 
         HospedeRepository repository = org.mockito.Mockito.mock(HospedeRepository.class);
         HospedeService service = new HospedeService(repository);
 
-        when(repository.findByDocumento("123")).thenReturn(new Hospede("João", "123"));
+        when(repository.existsByDocumento("123")).thenReturn(true);
 
         HospedeRequestDTO dto = new HospedeRequestDTO();
         dto.setNome("Pedro");
@@ -39,14 +36,12 @@ public class HospedeServiceTest {
     }
 
     @Test
-    void deveSalvarHospedeQuandoDocumentoNaoExiste() throws SQLException, HospedeJaExisteException {
+    void deveSalvarHospedeQuandoDocumentoNaoExiste() {
 
         HospedeRepository repository = org.mockito.Mockito.mock(HospedeRepository.class);
-
         HospedeService service = new HospedeService(repository);
 
-        when(repository.findByDocumento("456"))
-                .thenReturn(null);
+        when(repository.existsByDocumento("456")).thenReturn(false);
 
         HospedeRequestDTO dto = new HospedeRequestDTO();
         dto.setNome("Pedro");

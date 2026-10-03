@@ -6,7 +6,7 @@ import hotelflow.service.HospedeService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,8 +29,10 @@ public class HotelController {
     }
 
     @PostMapping("/hospedes")
-    public void salvarHospede(@Valid @RequestBody HospedeRequestDTO hospedeDTO) {
-        service.salvarHospede(hospedeDTO);
+    public ResponseEntity<Hospede> salvarHospede(@Valid @RequestBody HospedeRequestDTO hospedeDTO) {
+
+        Hospede hospede = service.salvarHospede(hospedeDTO);
+        return ResponseEntity.created(URI.create("/hospedes/" + hospede.getDocumento())).body(hospede);
     }
 
     @GetMapping("/hospedes/{documento}")

@@ -17,7 +17,7 @@ public class HospedeService {
         this.repository = repository;
     }
 
-    public void salvarHospede(HospedeRequestDTO hospedeRequestDTO)  {
+    public Hospede salvarHospede(HospedeRequestDTO hospedeRequestDTO)  {
 
         Hospede hospede = new Hospede(
                 hospedeRequestDTO.getNome(), hospedeRequestDTO.getDocumento());
@@ -25,7 +25,7 @@ public class HospedeService {
         if (repository.existsByDocumento(hospede.getDocumento())) {
             throw new HospedeJaExisteException("Este documento já está sendo utilizado por outro hóspede.");
         }
-        repository.save(hospede);
+        return repository.save(hospede);
     }
 
     public List<Hospede> buscarTodos() {

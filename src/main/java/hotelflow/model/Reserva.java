@@ -1,15 +1,35 @@
 package hotelflow.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
+@Entity
 public class Reserva {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "hospede_id")
     private Hospede hospede;
+
+    @ManyToOne
+    @JoinColumn(name = "quarto_id")
     private Quarto quarto;
+
+
     private LocalDate dataCheckIn;
     private LocalDate dataCheckOut;
     private String observacao;
+
+    protected Reserva(){}
+
+    public Long getId() {
+        return id;
+    }
 
     public Reserva(Hospede hospede, Quarto quarto, LocalDate dataCheckIn, LocalDate dataCheckOut, String observacao) {
         if (dataCheckOut.isBefore(dataCheckIn) || dataCheckOut.isEqual(dataCheckIn)) {

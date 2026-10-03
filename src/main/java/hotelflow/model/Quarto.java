@@ -1,11 +1,27 @@
 package hotelflow.model;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Quarto {
 
-    private int numero;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    @Column(nullable = false, unique = true)
+    private Integer numero;
+
+    @Enumerated(EnumType.STRING)
     private TipoQuarto tipo;
 
-    public Quarto(int numero, TipoQuarto tipo) {
+    protected Quarto() {}
+
+    public Quarto(Integer numero, TipoQuarto tipo) {
         if (numero <= 0) {
             throw new IllegalArgumentException("Número de quarto não pode ser inferior ou igual a 0.");
         }
@@ -13,7 +29,7 @@ public class Quarto {
         this.tipo = tipo;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
@@ -27,4 +43,6 @@ public class Quarto {
                 "Número: " + numero + "\n" +
                 "Tipo: " + tipo;
     }
+
+
 }

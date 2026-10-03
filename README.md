@@ -1,88 +1,172 @@
 # HotelFlow
 
-Sistema de gestão hoteleira desenvolvido em Java, criado inicialmente como projeto de estudo de Programação Orientada a Objetos e evoluindo para uma aplicação backend com API REST, PostgreSQL e Spring Boot.
+Projeto de estudo para praticar Java e construir, passo a passo, um sistema de gestão hoteleira. O repositório reúne exercícios de orientação a objetos e uma API REST para cadastro e consulta de hóspedes com Spring Boot, JPA e PostgreSQL.
 
-O projeto simula operações de um sistema interno de gestão hoteleira, com foco em regras de negócio, persistência de dados e construção de uma arquitetura backend.
+> **Status:** projeto em desenvolvimento. A API persistida atualmente cobre o fluxo de hóspedes; os módulos de RH e reservas são demonstrações de regras de negócio em memória.
 
-## Funcionalidades
+## O que o projeto faz
 
-### Gestão de RH
+### API de hóspedes
 
-- Cadastro de funcionários com cálculo automático de salário-base por cargo
-- Sistema de aumento salarial e bônus anual
-- Regras específicas por cargo
-- Definição de escalas de trabalho
-- Notificações automáticas ao funcionário quando uma escala é definida
+- Cadastra hóspedes no PostgreSQL usando Spring Data JPA.
+- Lista os hóspedes cadastrados.
+- Busca um hóspede pelo documento.
+- Valida nome e documento obrigatórios.
+- Impede o cadastro de um documento já utilizado.
+- Responde com `404 Not Found` quando a busca pelo documento não encontra um hóspede.
 
-### Gestão de Reservas
+### Regras de negócio em memória
 
-- Criação de reservas
-- Verificação de disponibilidade do quarto
-- Cancelamento de reservas
-- Cálculo do valor total da estadia com base no tipo de quarto e período
+- **RH:** funcionários, cargos, salários, bônus, escalas e notificações.
+- **Reservas:** disponibilidade de quartos, períodos de hospedagem, cancelamentos e cálculo de valores.
 
-### API de Hóspedes
-
-- Consulta de hóspedes cadastrados
-- Persistência de hóspedes no PostgreSQL
-- Endpoint REST para consulta dos hóspedes
-- Integração entre Spring Boot, JDBC e PostgreSQL
+Esses módulos ajudam a demonstrar conceitos de orientação a objetos, mas ainda não têm endpoints REST nem persistência no banco.
 
 ## Tecnologias
 
 - Java 25
-- Spring Boot
-- Spring Web
-- JDBC
+- Spring Boot 4.1.1
+- Spring Web e Bean Validation
+- Spring Data JPA / Hibernate
 - PostgreSQL
 - Maven
-- IntelliJ IDEA
-- Git/GitHub
+- JUnit e Mockito
 
-## Conceitos técnicos aplicados
+## Arquitetura da API
 
-### Java
+```mermaid
+flowchart LR
+    Cliente[Cliente HTTP] --> Controller[HotelController]
+    Controller --> Service[HospedeService]
+    Service --> Repository[HospedeRepository]
+    Repository --> JPA[Spring Data JPA]
+    JPA --> DB[(PostgreSQL)]
+```
 
-- Programação Orientada a Objetos
-- Encapsulamento
-- Composição
-- Herança
-- Polimorfismo
-- Interfaces
-- Enum com comportamentos específicos por constante
-- Collections
-- Streams e Lambdas
-- Optional
-- Exceções customizadas
-- LocalDate, LocalDateTime e ChronoUnit
+O controller recebe as requisições HTTP, o service aplica as regras do fluxo de hóspedes e o repositório acessa o banco por meio do JPA.
 
-### Banco de dados
+## Endpoints
 
-- SQL
+| Método | Rota | Descrição | Resposta de sucesso |
+|---|---|---|---|
+| `GET` | `/hotel` | Verifica se a aplicação está respondendo | `200 OK` |
+| `GET` | `/hospedes` | Lista os hóspedes | `200 OK` |
+| `GET` | `/hospedes/{documento}` | Busca pelo documento | `200 OK` ou `404 Not Found` |
+| `POST` | `/hospedes` | Cadastra um hóspede | `200 OK` |
+
+### Cadastrar hóspede
+
+```http
+POST /hospedes
+Content-Type: application/json
+```
+
+```json
+{
+  "nome": "Ana Souza",
+  "documento": "12345678900"
+}
+```
+
+O cadastro exige `nome` e `documento`. Campos em branco e documentos já cadastrados retornam `400 Bad Request` com uma mensagem de erro.
+
+### Consultar hóspede
+
+```http
+GET /hospedes/12345678900
+```
+
+Quando encontrado, o endpoint retorna `200 OK` e os dados do hóspede. Caso contrário, retorna `404 Not Found`.
+
+## Executar localmente
+
+### Pré-requisitos
+
+- JDK 25
+- Maven
 - PostgreSQL
-- JDBC
-- PreparedStatement
-- ResultSet
-- Persistência de dados
-- Separação entre lógica de negócio e acesso ao banco
 
-### Spring Boot
+Clone o repositório e crie o banco configurado pela aplicação:
 
-- Spring Boot
-- API REST
-- Controllers
-- Repository
-- Injeção de Dependência
-- Inversion of Control (IoC)
-- Mapeamento de endpoints HTTP
+```bash
+git clone https://github.com/Marcos1009-spec/HotelFlow.git
+cd HotelFlow
+```
 
-## Arquitetura atual
+No PostgreSQL, crie o banco e prepare a tabela e a sequência usadas pela entidade `Hospede`:
+
+```sql
+CREATE DATABASE "HotelFlow";
+```
+
+Conectado ao banco `HotelFlow`, execute:
+
+```sql
+CREATE SEQUENCE hospede_id_seq START WITH 1 INCREMENT BY 1;
+
+CREATE TABLE hospede (
+    id BIGINT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    documento VARCHAR(255) NOT NULL UNIQUE
+);
+```
+
+Configure a conexão por variáveis de ambiente. Elas sobrescrevem as propriedades equivalentes e ajudam a manter credenciais fora do código. Não publique senhas reais no repositório.
+
+PowerShell:
+
+```powershell
+$env:SPRING_DATASOURCE_URL = "jdbc:postgresql://localhost:5432/HotelFlow"
+$env:SPRING_DATASOURCE_USERNAME = "seu_usuario"
+$env:SPRING_DATASOURCE_PASSWORD = "sua_senha"
+```
+
+macOS ou Linux:
+
+```bash
+export SPRING_DATASOURCE_URL="jdbc:postgresql://localhost:5432/HotelFlow"
+export SPRING_DATASOURCE_USERNAME="seu_usuario"
+export SPRING_DATASOURCE_PASSWORD="sua_senha"
+```
+
+Com o banco preparado e as variáveis definidas no ambiente, inicie a aplicação:
+
+```bash
+mvn spring-boot:run
+```
+
+## Estrutura do projeto
 
 ```text
-Controller
-    ↓
-Repository
-    ↓
-JDBC
-    ↓
-PostgreSQL
+src/
+├── main/
+│   ├── java/hotelflow/
+│   │   ├── controller/   # Endpoints REST
+│   │   ├── dto/          # Objetos de entrada e validação
+│   │   ├── exception/    # Exceções e tratamento de erros
+│   │   ├── model/        # Entidades JPA e modelos de domínio
+│   │   ├── repository/   # Acesso a dados com Spring Data JPA
+│   │   └── service/      # Regras de negócio
+│   └── resources/        # Configuração da aplicação
+└── test/                # Testes automatizados
+```
+
+## Conceitos praticados
+
+- Encapsulamento, composição, herança, interfaces e polimorfismo.
+- Enums com comportamento específico por cargo.
+- Collections, Streams, lambdas e `Optional`.
+- Exceções personalizadas e validação de entrada.
+- API REST, injeção de dependência e separação entre controller, service e repository.
+- Mapeamento de entidades e persistência com JPA.
+
+## Próximos passos
+
+- Consolidar a configuração segura do banco e o processo de inicialização do schema.
+- Ampliar e atualizar os testes automatizados.
+- Evoluir os módulos de RH e reservas para persistência e API REST.
+- Adicionar documentação interativa dos endpoints.
+
+---
+
+Projeto desenvolvido para fins de estudo e evolução prática em desenvolvimento backend com Java.

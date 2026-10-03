@@ -56,9 +56,10 @@ O controller recebe as requisições HTTP, o service aplica as regras do fluxo d
 
 ### Cadastrar hóspede
 
-```http
-POST /hospedes
-Content-Type: application/json
+```bash
+curl -X POST http://localhost:8080/hospedes \
+  -H "Content-Type: application/json" \
+  -d '{"nome":"Ana Souza","documento":"12345678900"}'
 ```
 
 ```json
@@ -68,15 +69,43 @@ Content-Type: application/json
 }
 ```
 
-O cadastro exige `nome` e `documento`. Campos em branco e documentos já cadastrados retornam `400 Bad Request` com uma mensagem de erro.
+O cadastro exige `nome` e `documento`. Campos em branco e documentos já cadastrados retornam `400 Bad Request` com uma mensagem de erro. No sucesso, o endpoint retorna `200 OK` sem corpo de resposta.
 
 ### Consultar hóspede
 
-```http
-GET /hospedes/12345678900
+```bash
+curl http://localhost:8080/hospedes/12345678900
 ```
 
-Quando encontrado, o endpoint retorna `200 OK` e os dados do hóspede. Caso contrário, retorna `404 Not Found`.
+Quando encontrado, o endpoint retorna `200 OK` e um JSON semelhante a este:
+
+```json
+{
+  "id": 1,
+  "nome": "Ana Souza",
+  "documento": "12345678900"
+}
+```
+
+Caso contrário, retorna `404 Not Found`. Para listar todos os hóspedes, use `GET /hospedes`.
+
+### Listar hóspedes
+
+```bash
+curl http://localhost:8080/hospedes
+```
+
+A resposta é uma lista JSON; quando não há hóspedes cadastrados, a lista vem vazia:
+
+```json
+[
+  {
+    "id": 1,
+    "nome": "Ana Souza",
+    "documento": "12345678900"
+  }
+]
+```
 
 ## Executar localmente
 
@@ -135,6 +164,8 @@ Com o banco preparado e as variáveis definidas no ambiente, inicie a aplicaçã
 mvn spring-boot:run
 ```
 
+> **Atenção:** há pendências de compilação conhecidas no projeto. O comando acima descreve a forma esperada de inicialização depois que elas forem resolvidas.
+
 ## Estrutura do projeto
 
 ```text
@@ -166,6 +197,14 @@ src/
 - Ampliar e atualizar os testes automatizados.
 - Evoluir os módulos de RH e reservas para persistência e API REST.
 - Adicionar documentação interativa dos endpoints.
+- Implementar autenticação e autorização antes de usar dados reais.
+
+## Limitações atuais
+
+- A API ainda não tem autenticação ou autorização; use apenas dados fictícios.
+- RH e reservas funcionam em memória e não fazem parte da API REST atual.
+- O projeto não inclui migrações de banco; a criação inicial da tabela e da sequência é manual.
+- A compilação e os testes ainda precisam ser regularizados.
 
 ---
 

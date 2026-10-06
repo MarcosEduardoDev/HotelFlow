@@ -1,5 +1,6 @@
 package hotelflow.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,6 +30,23 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> tratarErroHospedeExistente(HospedeJaExisteException ex) {
 
         return ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
+    @ExceptionHandler(HospedeNaoEncontradoException.class)
+    public ResponseEntity<String> tratarErroHospedeNaoEncontrado(HospedeNaoEncontradoException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(QuartoNaoEncontradoException.class)
+    public ResponseEntity<String> tratarErroQuartoNaoEncontrado(QuartoNaoEncontradoException ex) {
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(QuartoIndisponivelException.class)
+    public ResponseEntity<String> tratarQuartoIndisponivel(QuartoIndisponivelException ex) {
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
 }

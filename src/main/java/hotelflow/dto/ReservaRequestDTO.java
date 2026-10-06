@@ -1,5 +1,6 @@
 package hotelflow.dto;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
@@ -55,4 +56,14 @@ public class ReservaRequestDTO {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
+    @AssertTrue(message = "O check-out deve ser depois do check-in.")
+    public boolean isPeriodoValido(){
+        if (dataCheckIn == null  || dataCheckOut == null) {
+            return true;
+        }
+        return dataCheckOut.isAfter(dataCheckIn);
+    }
+
+
 }

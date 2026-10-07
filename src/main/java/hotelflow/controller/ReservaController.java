@@ -6,12 +6,11 @@ import hotelflow.service.ReservaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ReservaController {
@@ -37,6 +36,14 @@ public class ReservaController {
                 reservaDTO.getObservacao());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(reserva);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/reservas/{quartoId}/{data}")
+    public void deletarReserva(@PathVariable Long quartoId, @PathVariable  LocalDate data){
+
+        service.cancelarReservaPorId(quartoId, data);
+        
     }
 
 

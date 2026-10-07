@@ -65,8 +65,13 @@ public class ReservaService {
                 .orElseThrow(() -> new QuartoNaoEncontradoException("Número de quarto não encontrado."));
 
         return criarReserva(new Reserva(hospede, quarto, dataCheckIn, dataCheckOut, observacao));
+    }
 
+    public void cancelarReservaPorId(Long quartoId, LocalDate data){
 
+        Quarto quarto = quartoRepository.findById(quartoId)
+                .orElseThrow(() -> new QuartoNaoEncontradoException("Quarto não encontrado."));
 
+        cancelarReserva(quarto, data);
     }
 }

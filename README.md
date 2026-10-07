@@ -1,4 +1,4 @@
-# HotelFlow
+# Velune
 
 Projeto de estudo para praticar Java e construir, passo a passo, um sistema de gestão hoteleira. O repositório reúne exercícios de orientação a objetos e uma API REST para cadastro e consulta de hóspedes com Spring Boot, JPA e PostgreSQL.
 
@@ -45,6 +45,11 @@ flowchart LR
 
 O controller recebe as requisições HTTP, o service aplica as regras do fluxo de hóspedes e o repositório acessa o banco por meio do JPA.
 
+## Interface web
+
+A interface fica em `src/main/resources/static` e é servida pelo Spring Boot. Com a aplicação iniciada, abra `http://localhost:8080`.
+
+Hóspedes, quartos e reservas usam os endpoints REST do projeto. A criação de quartos usa `POST /quartos` com JSON; a equipe e alguns indicadores de agenda ainda são exemplos visuais, pois esse módulo não tem API REST.
 ## Endpoints
 
 | Método | Rota | Descrição | Resposta de sucesso |
@@ -118,17 +123,17 @@ A resposta é uma lista JSON; quando não há hóspedes cadastrados, a lista vem
 Clone o repositório e crie o banco configurado pela aplicação:
 
 ```bash
-git clone https://github.com/Marcos1009-spec/HotelFlow.git
-cd HotelFlow
+git clone https://github.com/MarcosEduardoDev/Velune.git Velune
+cd Velune
 ```
 
 No PostgreSQL, crie o banco e prepare a tabela e a sequência usadas pela entidade `Hospede`:
 
 ```sql
-CREATE DATABASE "HotelFlow";
+CREATE DATABASE "Velune";
 ```
 
-Conectado ao banco `HotelFlow`, execute:
+Conectado ao banco `Velune`, execute:
 
 ```sql
 CREATE SEQUENCE hospede_id_seq START WITH 1 INCREMENT BY 1;
@@ -145,7 +150,7 @@ Configure a conexão por variáveis de ambiente. Elas sobrescrevem as propriedad
 PowerShell:
 
 ```powershell
-$env:SPRING_DATASOURCE_URL = "jdbc:postgresql://localhost:5432/HotelFlow"
+$env:SPRING_DATASOURCE_URL = "jdbc:postgresql://localhost:5432/Velune"
 $env:SPRING_DATASOURCE_USERNAME = "seu_usuario"
 $env:SPRING_DATASOURCE_PASSWORD = "sua_senha"
 ```
@@ -153,7 +158,7 @@ $env:SPRING_DATASOURCE_PASSWORD = "sua_senha"
 macOS ou Linux:
 
 ```bash
-export SPRING_DATASOURCE_URL="jdbc:postgresql://localhost:5432/HotelFlow"
+export SPRING_DATASOURCE_URL="jdbc:postgresql://localhost:5432/Velune"
 export SPRING_DATASOURCE_USERNAME="seu_usuario"
 export SPRING_DATASOURCE_PASSWORD="sua_senha"
 ```
@@ -171,7 +176,7 @@ mvn spring-boot:run
 ```text
 src/
 ├── main/
-│   ├── java/hotelflow/
+│   ├── java/velune/
 │   │   ├── controller/   # Endpoints REST
 │   │   ├── dto/          # Objetos de entrada e validação
 │   │   ├── exception/    # Exceções e tratamento de erros
@@ -209,3 +214,4 @@ src/
 ---
 
 Projeto desenvolvido para fins de estudo e evolução prática em desenvolvimento backend com Java.
+

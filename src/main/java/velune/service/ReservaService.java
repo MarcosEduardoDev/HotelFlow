@@ -48,7 +48,7 @@ public class ReservaService {
 
     public void cancelarReserva(Quarto quarto, LocalDate data){
         Reserva reserva = reservaRepository.findByQuarto(quarto).stream()
-                .filter(r -> r.contemData(data))
+                .filter(r -> r.estaAtiva(data))
                 .findFirst()
                 .orElseThrow(() -> new ReservaNaoEncontradaException("Reserva não encontrada."));
 
@@ -77,8 +77,11 @@ public class ReservaService {
 
     public List<Reserva> buscarReservasNaData(LocalDate data){
 
-       return reservaRepository.buscarReservasNaData(data);
+       return reservaRepository.findAll().stream()
+               .filter(r -> r.estaAtiva(data))
+               .toList();
     }
+
 
 
 }

@@ -1,19 +1,32 @@
 package velune.model;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Entity
 public class Funcionario {
 
     private String nome;
     private int idade;
     private String dataDeEntrada;
-    private static int contador = 1;
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
     private Cargo cargo;
+
+
     private double salario;
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private List<Escala> escalas = new ArrayList<>();
+
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private List<Notificacao> notificacoes = new ArrayList<>();
 
     public int getIdade() {
@@ -32,10 +45,11 @@ public class Funcionario {
         this.idade = idade;
         this.cargo = cargo;
         this.salario = cargo.calcularSalarioBase();
-        this.id = contador++;
     }
 
-    public int getId(){
+    protected Funcionario(){}
+
+    public Long getId(){
         return id;
     }
 
@@ -107,9 +121,9 @@ public class Funcionario {
                 "Escalas:\n" + formatarEscalas();
     }
 
-    public void marcarNotificacaoComoLida(int idNotificacao){
+    public void marcarNotificacaoComoLida(Long id){
         Optional<Notificacao> notificacao = notificacoes.stream()
-                .filter(n -> n.getIdNotificacao() == idNotificacao)
+                .filter(n -> n.equals(n.getId()))
                 .findFirst();
         notificacao.ifPresent(n -> n.marcarComoLida());
     }

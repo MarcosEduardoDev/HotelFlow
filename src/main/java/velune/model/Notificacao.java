@@ -1,22 +1,27 @@
 package velune.model;
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Notificacao {
 
     private String mensagem;
     private LocalDateTime data;
     private boolean lida;
-    private static int contaNotificacao = 1;
-    private int idNotificacao;
 
-    public int getIdNotificacao() {
-        return idNotificacao;
-    }
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionario;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     public Notificacao(String mensagem, LocalDateTime data) {
         this.mensagem = mensagem;
         this.data = data;
-        this.idNotificacao = contaNotificacao++;
+
     }
 
     public String getMensagem() {
@@ -43,7 +48,9 @@ public class Notificacao {
                 "Lida = " + lida;
     }
 
+    public Long getId() {
+        return id;
+    }
 
-
-
+    protected Notificacao() {}
 }

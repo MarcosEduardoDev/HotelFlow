@@ -53,4 +53,8 @@ public class Notificacao {
     }
 
     protected Notificacao() {}
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
 }

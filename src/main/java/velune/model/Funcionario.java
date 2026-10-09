@@ -83,6 +83,7 @@ public class Funcionario {
     }
 
     public void adicionarEscala(Escala escala){
+        escala.setFuncionario(this);
         escalas.add(escala);
     }
 
@@ -91,6 +92,7 @@ public class Funcionario {
     }
 
     public void adicionarNotificacao(Notificacao notificacao){
+        notificacao.setFuncionario(this);
         notificacoes.add(notificacao);
     }
 
@@ -121,9 +123,9 @@ public class Funcionario {
                 "Escalas:\n" + formatarEscalas();
     }
 
-    public void marcarNotificacaoComoLida(Long id){
+    public void marcarNotificacaoComoLida(Long idNotificacao){
         Optional<Notificacao> notificacao = notificacoes.stream()
-                .filter(n -> n.equals(n.getId()))
+                .filter(n -> idNotificacao.equals(n.getId()))
                 .findFirst();
         notificacao.ifPresent(n -> n.marcarComoLida());
     }

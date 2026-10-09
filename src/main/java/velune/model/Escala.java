@@ -46,4 +46,8 @@ public class Escala {
     public Long getId() {
         return id;
     }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
 }

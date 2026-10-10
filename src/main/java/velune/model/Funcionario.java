@@ -91,6 +91,10 @@ public class Funcionario {
         return new ArrayList<>(escalas);
     }
 
+    public String getDataDeEntrada() {
+        return dataDeEntrada;
+    }
+
     public void adicionarNotificacao(Notificacao notificacao){
         notificacao.setFuncionario(this);
         notificacoes.add(notificacao);
